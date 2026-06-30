@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addons>
-<addon
- id="plugin.video.prueba"
- name="Video Prueba"
- version="1.0.0"
- provider-name="Mi Kodi">
-</addon>
-</addons>
