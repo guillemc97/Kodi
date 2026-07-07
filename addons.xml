@@ -9,17 +9,6 @@
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
 
-    <extension point="xbmc.python.pluginsource"
-               library="addon.py">
-        <provides>imagenes</provides>
-    </extension>
-
-    <extension point="xbmc.addon.metadata">
-        <summary lang="es_ES">Addon de prueba</summary>
-        <description lang="es_ES">Primer addon de ejemplo.</description>
-        <platform>all</platform>
-    </extension>
-
 </addon>
 <addon id="plugin.video.demo"
        name="Demo Video"
@@ -30,8 +19,7 @@
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
 
-    <extension point="xbmc.python.pluginsource"
-               library="addon.py">
+    <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
     </extension>
 
