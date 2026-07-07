@@ -54,7 +54,7 @@ print(f"addons.xml generado con {len(addon_dirs)} addon(s): {', '.join(addon_dir
 # ---------------------------------------------------------------
 
 
-OCULTAR = {"addons.xml", "addons.xml.md5", "index.html"}
+OCULTAR = {"addons.xml", "addons.xml.md5", "index.html", "addon.xml"}
 def generar_listado(carpeta, entradas, titulo):
     entradas = [e for e in entradas if e not in OCULTAR]
     enlaces = "\n".join(f'<li><a href="{e}">{e}</a></li>' for e in entradas)
