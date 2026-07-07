@@ -10,6 +10,24 @@
     </requires>
 
 </addon>
+<addon id="plugin.program.repoinstaller"
+       name="Repository Installer"
+       version="1.0.0"
+       provider-name="TuNombre">
+
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+
+    <extension point="xbmc.python.script"
+               library="addon.py"/>
+
+    <extension point="xbmc.addon.metadata">
+        <summary>Instalador de repositorios</summary>
+        <platform>all</platform>
+    </extension>
+
+</addon>
 <addon id="plugin.video.demo"
        name="Demo Video"
        version="1.0.2"
@@ -22,27 +40,6 @@
     <extension point="xbmc.python.pluginsource"
                library="addon.py">
         <provides>video</provides>
-    </extension>
-
-    <extension point="xbmc.addon.metadata">
-        <summary lang="es_ES">Addon de prueba</summary>
-        <description lang="es_ES">Primer addon de ejemplo.</description>
-        <platform>all</platform>
-    </extension>
-
-</addon>
-<addon id="plugin.program.repoinstaller"
-       name="Demo Video"
-       version="1.0.2"
-       provider-name="Demo">
-
-    <requires>
-        <import addon="xbmc.python" version="3.0.0"/>
-    </requires>
-
-    <extension point="xbmc.python.pluginsource"
-               library="addon.py">
-        <provides>Repo</provides>
     </extension>
 
     <extension point="xbmc.addon.metadata">
