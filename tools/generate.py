@@ -54,8 +54,9 @@ print(f"addons.xml generado con {len(addon_dirs)} addon(s): {', '.join(addon_dir
 # ---------------------------------------------------------------
 
 
-
+OCULTAR = {"addons.xml", "addons.xml.md5", "index.html"}
 def generar_listado(carpeta, entradas, titulo):
+    entradas = [e for e in entradas if e not in OCULTAR]
     enlaces = "\n".join(f'<li><a href="{e}">{e}</a></li>' for e in entradas)
     html = f"""<!DOCTYPE html>
 <html>
@@ -74,9 +75,8 @@ def generar_listado(carpeta, entradas, titulo):
 
 
 
-
-# Raíz: solo las carpetas de los addons
-raiz_entradas = [f"{d}/" for d in addon_dirs]
+# Raíz: addons.xml, addons.xml.md5 y cada carpeta de addon
+raiz_entradas = ["addons.xml", "addons.xml.md5"] + [f"{d}/" for d in addon_dirs]
 generar_listado("", raiz_entradas, "Mi Repositorio Kodi")
 
 # Cada carpeta de addon: listar sus propios archivos (icon.png, addon.xml, zip...)
