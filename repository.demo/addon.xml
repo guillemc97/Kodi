@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<addon id="repository.demo" name="Demo Repo" version="1.0.0" provider-name="Demo">
+<addon id="repository.demo" name="Demo Repo" version="1.0.2" provider-name="Demo">
     <extension point="xbmc.addon.repository">
         <dir>
             <info>https://guillemc97.github.io/Kodi/addons.xml</info>

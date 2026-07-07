@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
-<addon id="plugin.video.demo" name="Demo Video" version="1.0.0" provider-name="Demo">
+<addon id="plugin.video.demo" name="Demo Video" version="1.0.2" provider-name="Demo">
     <extension point="xbmc.python.pluginsource" library="addon.py" />
 </addon>

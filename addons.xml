@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <addons>
-    <addon id="repository.demo" name="Demo Repo" version="1.0.0" provider-name="Demo">
+    <addon id="repository.demo" name="Demo Repo" version="1.0.2" provider-name="Demo">
         <extension point="xbmc.addon.repository">
             <dir>
                 <info>https://guillemc97.github.io/Kodi/addons.xml</info>
@@ -9,7 +9,7 @@
             </dir>
         </extension>
     </addon>
-    <addon id="plugin.video.demo" name="Demo Video" version="1.0.0" provider-name="Demo">
+    <addon id="plugin.video.demo" name="Demo Video" version="1.0.2" provider-name="Demo">
         <extension point="xbmc.python.pluginsource" library="addon.py" />
     </addon>
 </addons>
