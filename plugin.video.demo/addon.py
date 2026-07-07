@@ -1,2 +1,2 @@
 import xbmcgui
-xbmcgui.Dialog().ok('Demo','Hola')
+xbmcgui.Dialog().ok('DemoTEST','Hola')
