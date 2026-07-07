@@ -1,3 +1,4 @@
+
 """
 Genera addons.xml, addons.xml.md5 e index.html (listados de directorio)
 para un repositorio de Kodi alojado en GitHub Pages.
@@ -36,30 +37,24 @@ for carpeta in sorted(os.listdir(".")):
             contenido = contenido.split("?>", 1)[1]
             xml += contenido.strip() + "\n"
 
-for carpeta in os.listdir("."):
 xml += "\n</addons>"
 
-    addon = os.path.join(carpeta, "addon.xml")
 with open("addons.xml", "w", encoding="utf8") as f:
     f.write(xml)
 
-    if os.path.exists(addon):
 md5 = hashlib.md5(xml.encode("utf-8")).hexdigest()
 with open("addons.xml.md5", "w") as f:
     f.write(md5)
 
-        with open(addon, encoding="utf8") as f:
 print(f"addons.xml generado con {len(addon_dirs)} addon(s): {', '.join(addon_dirs)}")
 
-            contenido = f.read()
 # ---------------------------------------------------------------
 # 2. Generar index.html navegable en la raíz y en cada carpeta
 #    de addon, para que Kodi pueda listar y descargar los zips.
 # ---------------------------------------------------------------
 
-            contenido = contenido.split("?>")[1]
 
-            xml += contenido
+
 def generar_listado(carpeta, entradas, titulo):
     enlaces = "\n".join(f'<li><a href="{e}">{e}</a></li>' for e in entradas)
     html = f"""<!DOCTYPE html>
@@ -77,15 +72,12 @@ def generar_listado(carpeta, entradas, titulo):
     with open(ruta, "w", encoding="utf8") as f:
         f.write(html)
 
-xml += "\n</addons>"
 
-with open("addons.xml", "w", encoding="utf8") as f:
-    f.write(xml)
+
 # Raíz: addons.xml, addons.xml.md5 y cada carpeta de addon
 raiz_entradas = ["addons.xml", "addons.xml.md5"] + [f"{d}/" for d in addon_dirs]
 generar_listado("", raiz_entradas, "Mi Repositorio Kodi")
 
-md5 = hashlib.md5(xml.encode()).hexdigest()
 # Cada carpeta de addon: listar sus propios archivos (icon.png, addon.xml, zip...)
 for carpeta in addon_dirs:
     archivos = sorted(
@@ -95,6 +87,4 @@ for carpeta in addon_dirs:
     )
     generar_listado(carpeta, archivos, f"Index of /{carpeta}")
 
-with open("addons.xml.md5", "w") as f:
-    f.write(md5)
 print("index.html generados en la raíz y en cada carpeta de addon.")
