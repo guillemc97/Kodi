@@ -1,18 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addons>
-
-    <addon id="repository.mi_repo"
-           version="1.0.0"
-           name="Mi Repositorio"
-           provider-name="TuNombre">
-        ...
-    </addon>
-
-    <addon id="plugin.video.miaddon"
-           version="1.0.0"
-           name="Mi Addon"
-           provider-name="TuNombre">
-        ...
-    </addon>
-
-</addons>
+512fd044e42e1ee0e169a6466c5d6050
