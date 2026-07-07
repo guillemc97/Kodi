@@ -6,15 +6,10 @@ GitHub Pages no ofrece listado automático de directorios, y Kodi
 necesita encontrar enlaces <a href="..."> para poder "navegar" la
 fuente e instalar los addons. Este script genera esos listados.
 
-Además, lee fuentes.json y añade en la página principal una lista
-de otros repositorios recomendados (solo informativa: el usuario
-tiene que copiar la URL y añadirla a mano como fuente en Kodi).
-
 Ejecutar desde la raíz del repositorio: python tools/generate.py
 """
 
 import hashlib
-import json
 import os
 
 # Nos aseguramos de trabajar desde la raíz del repo, sea cual sea
@@ -41,40 +36,37 @@ for carpeta in sorted(os.listdir(".")):
             contenido = contenido.split("?>", 1)[1]
             xml += contenido.strip() + "\n"
 
+for carpeta in os.listdir("."):
 xml += "\n</addons>"
 
+    addon = os.path.join(carpeta, "addon.xml")
 with open("addons.xml", "w", encoding="utf8") as f:
     f.write(xml)
 
+    if os.path.exists(addon):
 md5 = hashlib.md5(xml.encode("utf-8")).hexdigest()
 with open("addons.xml.md5", "w") as f:
     f.write(md5)
 
+        with open(addon, encoding="utf8") as f:
 print(f"addons.xml generado con {len(addon_dirs)} addon(s): {', '.join(addon_dirs)}")
 
+            contenido = f.read()
 # ---------------------------------------------------------------
-# 2. Cargar fuentes.json (lista de repos recomendados, opcional)
-# ---------------------------------------------------------------
-fuentes = []
-if os.path.isfile("fuentes.json"):
-    with open("fuentes.json", encoding="utf8") as f:
-        fuentes = json.load(f)
-
-# ---------------------------------------------------------------
-# 3. Generar index.html navegable en la raíz y en cada carpeta
+# 2. Generar index.html navegable en la raíz y en cada carpeta
 #    de addon, para que Kodi pueda listar y descargar los zips.
 # ---------------------------------------------------------------
 
+            contenido = contenido.split("?>")[1]
 
-def generar_listado(carpeta, entradas, titulo, seccion_fuentes_html=""):
+            xml += contenido
+def generar_listado(carpeta, entradas, titulo):
     enlaces = "\n".join(f'<li><a href="{e}">{e}</a></li>' for e in entradas)
     html = f"""<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><title>{titulo}</title></head>
 <body>
 <h1>{titulo}</h1>
-{seccion_fuentes_html}
-<h2>Archivos</h2>
 <ul>
 {enlaces}
 </ul>
@@ -85,30 +77,15 @@ def generar_listado(carpeta, entradas, titulo, seccion_fuentes_html=""):
     with open(ruta, "w", encoding="utf8") as f:
         f.write(html)
 
+xml += "\n</addons>"
 
-def generar_seccion_fuentes(fuentes):
-    if not fuentes:
-        return ""
-    items = "\n".join(
-        f'<li><strong>{f["nombre"]}</strong><br>'
-        f'<code>{f["url"]}</code></li>'
-        for f in fuentes
-    )
-    return f"""
-<h2>Fuentes recomendadas para Kodi</h2>
-<p>Copia la URL y añádela en Kodi: Ajustes &rarr; Sistema &rarr; Gestor de archivos &rarr; Añadir fuente.</p>
-<ul>
-{items}
-</ul>
-"""
-
-
-seccion_fuentes = generar_seccion_fuentes(fuentes)
-
-# Raíz: addons.xml, addons.xml.md5, cada carpeta de addon, y la lista de fuentes
+with open("addons.xml", "w", encoding="utf8") as f:
+    f.write(xml)
+# Raíz: addons.xml, addons.xml.md5 y cada carpeta de addon
 raiz_entradas = ["addons.xml", "addons.xml.md5"] + [f"{d}/" for d in addon_dirs]
-generar_listado("", raiz_entradas, "Mi Repositorio Kodi", seccion_fuentes)
+generar_listado("", raiz_entradas, "Mi Repositorio Kodi")
 
+md5 = hashlib.md5(xml.encode()).hexdigest()
 # Cada carpeta de addon: listar sus propios archivos (icon.png, addon.xml, zip...)
 for carpeta in addon_dirs:
     archivos = sorted(
@@ -118,4 +95,6 @@ for carpeta in addon_dirs:
     )
     generar_listado(carpeta, archivos, f"Index of /{carpeta}")
 
+with open("addons.xml.md5", "w") as f:
+    f.write(md5)
 print("index.html generados en la raíz y en cada carpeta de addon.")
