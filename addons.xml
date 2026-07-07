@@ -5,7 +5,8 @@
             <dir>
                 <info>https://guillemc97.github.io/Kodi/addons.xml</info>
                 <checksum>https://guillemc97.github.io/Kodi/addons.xml.md5</checksum>
-                <datadir zip="true">https://guillemc97.github.io/Kodi/</datadir>
+                <datadir>https://guillemc97.github.io/Kodi/</datadir>
+                <hashes>false</hashes>
             </dir>
         </extension>
     </addon>
