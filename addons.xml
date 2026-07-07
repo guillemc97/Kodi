@@ -1,35 +1,57 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <addons>
-    <addon id="repository.demo" name="Demo Repo" version="1.0.2" provider-name="Demo">
-        <extension point="xbmc.addon.repository">
-            <dir>
-                <info>https://guillemc97.github.io/Kodi/addons.xml</info>
-                <checksum>https://guillemc97.github.io/Kodi/addons.xml.md5</checksum>
-                <datadir>https://guillemc97.github.io/Kodi/</datadir>
-                <hashes>false</hashes>
-            </dir>
-        </extension>
-    </addon>
-    <addon id="plugin.video.demo"
-        name="Demo Video"
-        version="1.0.2"
-        provider-name="Demo">
+<addon id="plugin.video.demo"
+       name="Demo Video"
+       version="1.0.2"
+       provider-name="Demo">
 
-        <requires>
-            <import addon="xbmc.python" version="3.0.0" />
-        </requires>
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
 
-        <extension
-            point="xbmc.python.pluginsource"
-            library="addon.py">
-            <provides>video</provides>
-        </extension>
+    <extension point="xbmc.python.pluginsource"
+               library="addon.py">
+        <provides>video</provides>
+    </extension>
 
-        <extension point="xbmc.addon.metadata">
-            <summary>Addon de ejemplo</summary>
-            <description>Primer addon del repositorio.</description>
-            <platform>all</platform>
-        </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="es_ES">Addon de prueba</summary>
+        <description lang="es_ES">Primer addon de ejemplo.</description>
+        <platform>all</platform>
+    </extension>
 
-    </addon>
+</addon>
+<addon id="repository.demo"
+    name="Demo Repo"
+    version="1.0.2"
+    provider-name="Demo">
+
+    <requires>
+        <import addon="xbmc.addon" version="20.0.0" />
+    </requires>
+
+    <extension point="xbmc.addon.repository">
+        <dir>
+            <info compressed="false">
+                https://guillemc97.github.io/Kodi/addons.xml
+            </info>
+
+            <checksum>
+                https://guillemc97.github.io/Kodi/addons.xml.md5
+            </checksum>
+
+            <datadir zip="true">
+                https://guillemc97.github.io/Kodi/
+            </datadir>
+        </dir>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <summary>Repositorio Demo</summary>
+        <description>Repositorio de addons para Kodi.</description>
+        <platform>all</platform>
+    </extension>
+
+</addon>
+
 </addons>
