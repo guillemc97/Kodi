@@ -1,1 +1,45 @@
-<addon id="repository.mi_repo" version="1.0.0" name="Mi Repositorio" provider-name="TuNombre"></addon>
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="repository.mi_repo"
+       name="Mi Repositorio"
+       version="1.0.0"
+       provider-name="TuNombre">
+
+    <requires>
+        <import addon="xbmc.addon" version="20.0.0"/>
+    </requires>
+
+    <extension
+        point="xbmc.addon.repository"
+        name="Mi Repositorio">
+
+        <dir>
+
+            <info compressed="false">
+                https://TU_USUARIO.github.io/kodi-repository/addons.xml
+            </info>
+
+            <checksum>
+                https://TU_USUARIO.github.io/kodi-repository/addons.xml.md5
+            </checksum>
+
+            <datadir zip="true">
+                https://TU_USUARIO.github.io/kodi-repository/
+            </datadir>
+
+        </dir>
+
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+
+        <summary>Repositorio Oficial</summary>
+
+        <description>
+        Repositorio oficial para Kodi 21 y Kodi 22.
+        </description>
+
+        <platform>all</platform>
+
+    </extension>
+
+</addon>
