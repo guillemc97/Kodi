@@ -9,7 +9,26 @@
             </dir>
         </extension>
     </addon>
-    <addon id="plugin.video.demo" name="Demo Video" version="1.0.2" provider-name="Demo">
-        <extension point="xbmc.python.pluginsource" library="addon.py" />
+    <addon id="plugin.video.demo"
+        name="Demo Video"
+        version="1.0.2"
+        provider-name="Demo">
+
+        <requires>
+            <import addon="xbmc.python" version="3.0.0" />
+        </requires>
+
+        <extension
+            point="xbmc.python.pluginsource"
+            library="addon.py">
+            <provides>video</provides>
+        </extension>
+
+        <extension point="xbmc.addon.metadata">
+            <summary>Addon de ejemplo</summary>
+            <description>Primer addon del repositorio.</description>
+            <platform>all</platform>
+        </extension>
+
     </addon>
 </addons>

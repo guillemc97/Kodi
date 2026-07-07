@@ -1,2 +1,7 @@
+import sys
 import xbmcgui
-xbmcgui.Dialog().ok('DemoTEST','Hola')
+import xbmcplugin
+
+xbmcgui.Dialog().ok("Demo", "¡Hola desde el addon!")
+
+xbmcplugin.endOfDirectory(int(sys.argv[1]))
