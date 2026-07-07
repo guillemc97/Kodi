@@ -75,6 +75,8 @@ def generar_listado(carpeta, entradas, titulo):
 
 
 # Raíz: addons.xml, addons.xml.md5 y cada carpeta de addon
+raiz_entradas = ["addons.xml", "addons.xml.md5"] + [f"{d}/" for d in addon_dirs]
+#generar_listado("", raiz_entradas, "Mi Repositorio Kodi")
 
 # Cada carpeta de addon: listar sus propios archivos (icon.png, addon.xml, zip...)
 for carpeta in addon_dirs:
