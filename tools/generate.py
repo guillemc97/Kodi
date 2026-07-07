@@ -74,3 +74,15 @@ def generar_listado(carpeta, entradas, titulo):
 
 
 
+# Raíz: addons.xml, addons.xml.md5 y cada carpeta de addon
+
+# Cada carpeta de addon: listar sus propios archivos (icon.png, addon.xml, zip...)
+for carpeta in addon_dirs:
+    archivos = sorted(
+        f
+        for f in os.listdir(carpeta)
+        if os.path.isfile(os.path.join(carpeta, f))
+    )
+    generar_listado(carpeta, archivos, f"Index of /{carpeta}")
+
+print("index.html generados en la raíz y en cada carpeta de addon.")
