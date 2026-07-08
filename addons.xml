@@ -31,6 +31,25 @@
     </extension>
 
 </addon>
+<addon id="plugin.program.repoinstaller"
+       name="Repository Installer"
+       version="1.0.2"
+       provider-name="Demo">
+
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+
+    <extension point="xbmc.python.pluginsource"
+               library="addon.py" />
+
+    <extension point="xbmc.addon.metadata">
+        <summary lang="es_ES">Instalador de repositorios</summary>
+        <description lang="es_ES">Instalador de repositorios</description>
+        <platform>all</platform>
+    </extension>
+
+</addon>
 <addon id="repository.demo"
     name="Demo Repo"
     version="1.0.2"
