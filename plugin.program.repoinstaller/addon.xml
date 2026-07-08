@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.program.repoinstaller"
        name="Repository Installer"
-       version="1.0.0"
-       provider-name="TuNombre">
+       version="1.0.2"
+       provider-name="Demo">
 
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
