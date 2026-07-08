@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="repository.demo"
     name="Repo"
-    version="1.0.3"
+    version="1.0.4"
     provider-name="Guillem">
 
     <requires>
