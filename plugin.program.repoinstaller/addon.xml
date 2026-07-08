@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.program.repoinstaller"
-       name="Instalar repositorios"
-       version="1.0.3"
-       provider-name="Guillem">
+    name="Instalar repositorios"
+    version="1.0.4"
+    provider-name="Guillem">
 
     <requires>
-        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="xbmc.python" version="3.0.0" />
     </requires>
 
     <extension point="xbmc.python.script"
-               library="addon.py"/>
+        library="addon.py" />
 
     <extension point="xbmc.addon.metadata">
         <summary lang="es_ES">Instalar repositorios 2</summary>
         <description lang="es_ES">Descage los repos disponibles</description>
         <platform>all</platform>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
     </extension>
 
 </addon>
