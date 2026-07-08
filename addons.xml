@@ -1,65 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
-<addon id="plugin.foto.demo"
-       name="Fotos"
-       version="1.0.2"
-       provider-name="Imagenes">
+    <addon id="repository.demo"
+        name="Demo Repo"
+        version="1.0.2"
+        provider-name="Demo">
 
-    <requires>
-        <import addon="xbmc.python" version="3.0.0"/>
-    </requires>
+        <requires>
+            <import addon="xbmc.addon" version="20.0.0" />
+        </requires>
 
-</addon>
-<addon id="plugin.program.repoinstaller"
-       name="Instalar repositorios"
-       version="1.0.3"
-       provider-name="Guillem">
+        <extension point="xbmc.addon.repository">
+            <dir>
+                <info compressed="false">
+                    https://guillemc97.github.io/Kodi/addons.xml
+                </info>
 
-    <requires>
-        <import addon="xbmc.python" version="3.0.0"/>
-    </requires>
+                <checksum>
+                    https://guillemc97.github.io/Kodi/addons.xml.md5
+                </checksum>
 
-    <extension point="xbmc.python.script"
-               library="addon.py"/>
+                <datadir zip="true">
+                    https://guillemc97.github.io/Kodi/
+                </datadir>
+            </dir>
+        </extension>
 
-    <extension point="xbmc.addon.metadata">
-        <summary lang="es_ES">Instalar repositorios 2</summary>
-        <description lang="es_ES">Descage los repos disponibles</description>
-        <platform>all</platform>
-    </extension>
-
-</addon>
-<addon id="repository.demo"
-    name="Demo Repo"
-    version="1.0.2"
-    provider-name="Demo">
-
-    <requires>
-        <import addon="xbmc.addon" version="20.0.0" />
-    </requires>
-
-    <extension point="xbmc.addon.repository">
-        <dir>
-            <info compressed="false">
-                https://guillemc97.github.io/Kodi/addons.xml
-            </info>
-
-            <checksum>
-                https://guillemc97.github.io/Kodi/addons.xml.md5
-            </checksum>
-
-            <datadir zip="true">
-                https://guillemc97.github.io/Kodi/
-            </datadir>
-        </dir>
-    </extension>
-
-    <extension point="xbmc.addon.metadata">
-        <summary>Repositorio Demo</summary>
-        <description>Repositorio de addons para Kodi.</description>
-        <platform>all</platform>
-    </extension>
-
-</addon>
-
+        <extension point="xbmc.addon.metadata">
+            <summary>Repositorio Demo</summary>
+            <description>Repositorio de addons para Kodi.</description>
+            <platform>all</platform>
+        </extension>
+    </addon>
 </addons>
