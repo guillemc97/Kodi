@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 Añade automáticamente, sin preguntar nada, todas las fuentes listadas
-en fuentes.json como fuente de archivos en Kodi (sources.xml).
+en repos.json como fuente de archivos en Kodi (sources.xml).
 
-Ajusta FUENTES_URL para que apunte a tu propio fuentes.json.
+Ajusta FUENTES_URL para que apunte a tu propio repos.json.
 """
 
 import json
+import traceback
 import urllib.request
 import xml.etree.ElementTree as ET
 
@@ -17,16 +18,8 @@ FUENTES_URL = "https://guillemc97.github.io/Kodi/plugin.program.repoinstaller/re
 
 
 def obtener_fuentes():
-    try:
-        with urllib.request.urlopen(FUENTES_URL, timeout=10) as resp:
-            return json.loads(resp.read().decode("utf-8"))
-    except Exception:
-        xbmcgui.Dialog().notification(
-            "Fuentes",
-            "No se pudo descargar la lista de fuentes",
-            xbmcgui.NOTIFICATION_ERROR,
-        )
-        return []
+    with urllib.request.urlopen(FUENTES_URL, timeout=10) as resp:
+        return json.loads(resp.read().decode("utf-8"))
 
 
 def anadir_fuente(nombre, url):
@@ -59,14 +52,50 @@ def anadir_fuente(nombre, url):
 
 
 def main():
-    fuentes = obtener_fuentes()
-    if not fuentes:
+    try:
+        fuentes = obtener_fuentes()
+    except Exception as e:
+        xbmcgui.Dialog().notification(
+            "Fuentes",
+            f"No se pudo descargar repos.json: {e}",
+            xbmcgui.NOTIFICATION_ERROR,
+            8000,
+        )
+        return
+
+    if not isinstance(fuentes, list) or not fuentes:
+        xbmcgui.Dialog().notification(
+            "Fuentes", "repos.json está vacío o mal formado", xbmcgui.NOTIFICATION_ERROR
+        )
         return
 
     anadidas = 0
     for fuente in fuentes:
-        if anadir_fuente(fuente["nombre"], fuente["url"]):
-            anadidas += 1
+        try:
+            nombre = fuente["name"]
+            url = fuente["repo"]
+        except (KeyError, TypeError) as e:
+            xbmcgui.Dialog().notification(
+                "Fuentes",
+                f"Entrada inválida en repos.json (falta {e}). Debe tener 'name' y 'repo'.",
+                xbmcgui.NOTIFICATION_ERROR,
+                8000,
+            )
+            continue
+
+        try:
+            if anadir_fuente(nombre, url):
+                anadidas += 1
+        except Exception:
+            xbmcgui.Dialog().notification(
+                "Fuentes",
+                f"Error añadiendo '{nombre}', revisa el log",
+                xbmcgui.NOTIFICATION_ERROR,
+            )
+            # Vuelca el error completo al log de Kodi para poder depurarlo
+            import xbmc
+
+            xbmc.log(traceback.format_exc(), xbmc.LOGERROR)
 
     if anadidas:
         xbmcgui.Dialog().notification(

@@ -1,12 +1,6 @@
 [
     {
         "name": "Bugatsinho",
-        "addons_xml": "https://bugatsinho.github.io/repo/addons.xml",
-        "icon": "https://bugatsinho.github.io/repo/icon.png"
-    },
-    {
-        "name": "Mi Repo",
-        "addons_xml": "https://midominio.github.io/repo/addons.xml",
-        "icon": "https://midominio.github.io/repo/icon.png"
+        "repo": "https://bugatsinho.github.io/repo/"
     }
 ]
