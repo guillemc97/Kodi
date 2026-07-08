@@ -11,9 +11,9 @@
 
 </addon>
 <addon id="plugin.program.repoinstaller"
-       name="Repository Installer"
-       version="1.0.2"
-       provider-name="Demo">
+       name="Instalar repositorios"
+       version="1.0.3"
+       provider-name="Guillem">
 
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
@@ -23,7 +23,8 @@
                library="addon.py"/>
 
     <extension point="xbmc.addon.metadata">
-        <summary>Instalador de repositorios</summary>
+        <summary lang="es_ES">Instalar repositorios</summary>
+        <description lang="es_ES">Descage los repos disponibles</description>
         <platform>all</platform>
     </extension>
 
