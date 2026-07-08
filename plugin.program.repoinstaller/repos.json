@@ -1,6 +1,10 @@
 [
     {
-        "name": "Bugatsinho",
+        "name": "Deportes en Directo (Bugatsinho)",
         "repo": "https://bugatsinho.github.io/repo/"
+    },
+    {
+        "name": "Deportes en Directo (Magellan)",
+        "repo": "https://tinyurl.com/magellanrepo/"
     }
 ]
