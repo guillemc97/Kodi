@@ -1,41 +1,101 @@
-
 """
-Genera addons.xml, addons.xml.md5 e index.html (listados de directorio)
-para un repositorio de Kodi alojado en GitHub Pages.
+Genera addons.xml, addons.xml.md5, empaqueta cada addon en su .zip
+e index.html (listados de directorio) para un repositorio de Kodi
+alojado en GitHub Pages.
 
-GitHub Pages no ofrece listado automático de directorios, y Kodi
-necesita encontrar enlaces <a href="..."> para poder "navegar" la
-fuente e instalar los addons. Este script genera esos listados.
+IMPORTANTE: Kodi exige que la PRIMERA entrada dentro del zip sea la
+carpeta del addon (como entrada de directorio), antes que cualquier
+archivo. Si no, falla la instalación con:
+  "installing addon failed ... first item is folder: false"
+Por eso este script escribe esa entrada de carpeta explícitamente
+como primer elemento del zip.
 
 Ejecutar desde la raíz del repositorio: python tools/generate.py
 """
 
 import hashlib
 import os
+import re
+import zipfile
 
-# Nos aseguramos de trabajar desde la raíz del repo, sea cual sea
-# el directorio desde el que se ejecute el script.
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(ROOT)
 
-EXCLUIR = {".git", ".github", "tools", "__pycache__"}
+EXCLUIR = {".git", ".github", ".vscode", "tools", "__pycache__"}
 
 # ---------------------------------------------------------------
-# 1. Generar addons.xml a partir de cada addon.xml existente
+# 1. Detectar addons y empaquetar cada uno en su zip
 # ---------------------------------------------------------------
-xml = '<?xml version="1.0" encoding="UTF-8"?>\n<addons>\n'
 addon_dirs = []
 
 for carpeta in sorted(os.listdir(".")):
     if carpeta in EXCLUIR or not os.path.isdir(carpeta):
         continue
-    addon_xml_path = os.path.join(carpeta, "addon.xml")
-    if os.path.isfile(addon_xml_path):
+    if os.path.isfile(os.path.join(carpeta, "addon.xml")):
         addon_dirs.append(carpeta)
-        with open(addon_xml_path, encoding="utf8") as f:
-            contenido = f.read()
-            contenido = contenido.split("?>", 1)[1]
-            xml += contenido.strip() + "\n"
+
+
+def version_de(carpeta):
+    with open(os.path.join(carpeta, "addon.xml"), encoding="utf8") as f:
+        contenido = f.read()
+    # Ignoramos la cabecera <?xml version="1.0"?> y buscamos el
+    # version="..." dentro de la propia etiqueta <addon ...>
+    contenido = contenido.split("?>", 1)[-1]
+    m = re.search(r'<addon\b[^>]*\bversion="([^"]+)"', contenido, re.DOTALL)
+    return m.group(1) if m else "1.0.0"
+
+
+def empaquetar(carpeta):
+    version = version_de(carpeta)
+    zip_name = f"{carpeta}-{version}.zip"
+    zip_path = os.path.join(carpeta, zip_name)
+
+    if os.path.isfile(zip_path):
+        return  # ya está empaquetada esta versión
+
+    # Elimina zips de versiones antiguas de este addon
+    for f in os.listdir(carpeta):
+        if f.endswith(".zip") and f != zip_name:
+            os.remove(os.path.join(carpeta, f))
+
+    # Reunimos los archivos a incluir, ignorando zips, index.html
+    # y carpetas vacías (no aportan nada y pueden confundir a Kodi)
+    archivos = []
+    for raiz, _dirs, nombres in os.walk(carpeta):
+        for nombre in nombres:
+            if nombre.endswith(".zip") or nombre == "index.html":
+                continue
+            ruta_completa = os.path.join(raiz, nombre)
+            arcname = os.path.join(carpeta, os.path.relpath(ruta_completa, carpeta))
+            archivos.append((ruta_completa, arcname.replace(os.sep, "/")))
+
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+        # 1) Entrada de carpeta explícita PRIMERO: Kodi la exige como
+        #    primer elemento del zip para aceptar la instalación.
+        carpeta_info = zipfile.ZipInfo(f"{carpeta}/")
+        carpeta_info.external_attr = 0o40775 << 16
+        z.writestr(carpeta_info, "")
+
+        # 2) Después, el resto de archivos
+        for ruta_completa, arcname in archivos:
+            z.write(ruta_completa, arcname)
+
+    print(f"Empaquetado {zip_name}")
+
+
+for carpeta in addon_dirs:
+    empaquetar(carpeta)
+
+# ---------------------------------------------------------------
+# 2. Generar addons.xml a partir de cada addon.xml existente
+# ---------------------------------------------------------------
+xml = '<?xml version="1.0" encoding="UTF-8"?>\n<addons>\n'
+
+for carpeta in addon_dirs:
+    with open(os.path.join(carpeta, "addon.xml"), encoding="utf8") as f:
+        contenido = f.read()
+        contenido = contenido.split("?>", 1)[1]
+        xml += contenido.strip() + "\n"
 
 xml += "\n</addons>"
 
@@ -49,12 +109,13 @@ with open("addons.xml.md5", "w") as f:
 print(f"addons.xml generado con {len(addon_dirs)} addon(s): {', '.join(addon_dirs)}")
 
 # ---------------------------------------------------------------
-# 2. Generar index.html navegable en la raíz y en cada carpeta
+# 3. Generar index.html navegable en la raíz y en cada carpeta
 #    de addon, para que Kodi pueda listar y descargar los zips.
 # ---------------------------------------------------------------
 
-
 OCULTAR = {"addons.xml", "addons.xml.md5", "index.html", "addon.xml"}
+
+
 def generar_listado(carpeta, entradas, titulo):
     entradas = [e for e in entradas if e not in OCULTAR]
     enlaces = "\n".join(f'<li><a href="{e}">{e}</a></li>' for e in entradas)
@@ -74,17 +135,12 @@ def generar_listado(carpeta, entradas, titulo):
         f.write(html)
 
 
-
-# Raíz: addons.xml, addons.xml.md5 y cada carpeta de addon
 raiz_entradas = ["addons.xml", "addons.xml.md5"] + [f"{d}/" for d in addon_dirs]
 generar_listado("", raiz_entradas, "Mi Repositorio Kodi")
 
-# Cada carpeta de addon: listar sus propios archivos (icon.png, addon.xml, zip...)
 for carpeta in addon_dirs:
     archivos = sorted(
-        f
-        for f in os.listdir(carpeta)
-        if os.path.isfile(os.path.join(carpeta, f))
+        f for f in os.listdir(carpeta) if os.path.isfile(os.path.join(carpeta, f))
     )
     generar_listado(carpeta, archivos, f"Index of /{carpeta}")
 
