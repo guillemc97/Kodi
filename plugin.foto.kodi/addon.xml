@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.foto.demo"
     name="Fotos"
-    version="1.0.3"
+    version="1.0.4"
     provider-name="Imagenes">
 
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
     </requires>
+
+    <extension point="xbmc.python.script"
+        library="addon.py" />
 
     <extension point="xbmc.addon.metadata">
         <summary lang="es_ES">Instalar Imagenes</summary>
