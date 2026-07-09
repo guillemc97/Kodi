@@ -41,7 +41,7 @@
     </extension>
 
 </addon>
-<addon id="repository.demo"
+<addon id="repository.main"
     name="Guillem Repo"
     version="1.0.8"
     provider-name="Guillem">
