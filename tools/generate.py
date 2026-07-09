@@ -109,12 +109,41 @@ with open("addons.xml.md5", "w") as f:
 print(f"addons.xml generado con {len(addon_dirs)} addon(s): {', '.join(addon_dirs)}")
 
 # ---------------------------------------------------------------
-# 3. Generar index.html navegable en la raíz y en cada carpeta
-#    de addon, para que Kodi pueda listar y descargar los zips.
+# 3. Preparar carpeta repo
 # ---------------------------------------------------------------
 
-OCULTAR = {"addons.xml", "addons.xml.md5", "index.html", "addon.xml"}
+import shutil
 
+repo = "repo"
+addon_repo = "repository.kodi"
+
+# Vaciar la carpeta repo
+for f in os.listdir(repo):
+    ruta = os.path.join(repo, f)
+    if os.path.isfile(ruta):
+        os.remove(ruta)
+
+# Copiar el zip de repository.kodi
+zip_repo = next(
+    (f for f in os.listdir(addon_repo) if f.endswith(".zip")),
+    None
+)
+
+if zip_repo:
+    shutil.copy2(
+        os.path.join(addon_repo, zip_repo),
+        os.path.join(repo, zip_repo)
+    )
+
+    print(f"Copiado {zip_repo} a {repo}")
+else:
+    print("No se encontró el zip del addon repository.kodi")
+
+# ---------------------------------------------------------------
+# 4. Generar index.html en repo para descargar el .zip.
+# ---------------------------------------------------------------
+
+OCULTAR = {"index.html"}
 
 def generar_listado(carpeta, entradas, titulo):
     entradas = [e for e in entradas if e not in OCULTAR]
@@ -130,18 +159,19 @@ def generar_listado(carpeta, entradas, titulo):
 </body>
 </html>
 """
+
     ruta = os.path.join(carpeta, "index.html") if carpeta else "index.html"
     with open(ruta, "w", encoding="utf8") as f:
         f.write(html)
 
+repo = "repo"
 
-raiz_entradas = ["addons.xml", "addons.xml.md5"] + [f"{d}/" for d in addon_dirs]
-generar_listado("", raiz_entradas, "Mi Repositorio Kodi")
+archivos = sorted(
+    f for f in os.listdir(repo)
+    if os.path.isfile(os.path.join(repo, f))
+    and f.endswith(".zip")
+)
 
-for carpeta in addon_dirs:
-    archivos = sorted(
-        f for f in os.listdir(carpeta) if os.path.isfile(os.path.join(carpeta, f))
-    )
-    generar_listado(carpeta, archivos, f"Index of /{carpeta}")
+generar_listado(repo, archivos, "Repositorio Kodi")
 
-print("index.html generados en la raíz y en cada carpeta de addon.")
+print(f"index.html generado en {repo}")
