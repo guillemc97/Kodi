@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
 <addon id="plugin.foto.demo"
-       name="Fotos"
-       version="1.0.3"
-       provider-name="Imagenes">
+    name="Fotos"
+    version="1.0.3"
+    provider-name="Imagenes">
 
     <requires>
-        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="xbmc.python" version="3.0.0" />
     </requires>
 
     <extension point="xbmc.addon.metadata">
-        <summary lang="es_ES">Instalar repositorios 2</summary>
-        <description lang="es_ES">Descage los repos disponibles</description>
+        <summary lang="es_ES">Instalar Imagenes</summary>
+        <description lang="es_ES">Nuevas imagenes en el repo</description>
         <platform>all</platform>
         <assets>
             <icon>icon.png</icon>
@@ -42,8 +42,8 @@
 
 </addon>
 <addon id="repository.demo"
-    name="Repo"
-    version="1.0.6"
+    name="Guillem Repo"
+    version="1.0.7"
     provider-name="Guillem">
 
     <requires>
@@ -52,17 +52,9 @@
 
     <extension point="xbmc.addon.repository">
         <dir>
-            <info compressed="false">
-                https://guillemc97.github.io/Kodi/addons.xml
-            </info>
-
-            <checksum>
-                https://guillemc97.github.io/Kodi/addons.xml.md5
-            </checksum>
-
-            <datadir zip="true">
-                https://guillemc97.github.io/Kodi/
-            </datadir>
+            <info compressed="false">https://guillemc97.github.io/Kodi/addons.xml</info>
+            <checksum>https://guillemc97.github.io/Kodi/addons.xml.md5</checksum>
+            <datadir zip="true">https://guillemc97.github.io/Kodi/</datadir>
         </dir>
     </extension>
 
