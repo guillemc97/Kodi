@@ -1,31 +1,28 @@
-# -*- coding: utf-8 -*-
 import os
-import xbmcvfs
-import xbmc
+import xbmcgui
+import xbmcplugin
+import sys
 
-# Carpeta origen (cámbiala por la que quieras)
-ORIGEN = os.path.dirname(os.path.abspath(__file__))
+handle = int(sys.argv[1])
 
-# Carpeta destino (el nuevo álbum)
-DESTINO = "special://profile/Pictures/FodosKodi/"
+ruta = os.path.dirname(os.path.abspath(__file__))
 
-# Crear el álbum si no existe
-if not xbmcvfs.exists(DESTINO):
-    xbmcvfs.mkdirs(DESTINO)
+for archivo in sorted(os.listdir(ruta)):
+    if archivo.lower().endswith((".jpg", ".jpeg", ".png", ".webp")):
+        imagen = os.path.join(ruta, archivo)
 
-# Listar archivos
-archivos, carpetas = xbmcvfs.listdir(ORIGEN)
+        li = xbmcgui.ListItem(label=archivo)
+        li.setArt({
+            "thumb": imagen,
+            "icon": imagen,
+            "fanart": imagen
+        })
 
-copiadas = 0
+        xbmcplugin.addDirectoryItem(
+            handle,
+            imagen,
+            li,
+            isFolder=False
+        )
 
-for archivo in archivos:
-    if archivo.lower().endswith((".jpg", ".jpeg")):
-        origen = os.path.join(ORIGEN, archivo)
-        destino = os.path.join(DESTINO, archivo)
-
-        if xbmcvfs.copy(origen, destino):
-            copiadas += 1
-
-xbmc.log(f"Se copiaron {copiadas} imágenes al álbum.", xbmc.LOGINFO)
-
-xbmc.executebuiltin(f'Notification(Álbum creado,{copiadas} imágenes copiadas,5000)')
+xbmcplugin.endOfDirectory(handle)
