@@ -2,7 +2,7 @@
 <addons>
 <addon id="plugin.foto.kodi"
     name="Fotos"
-    version="1.0.8"
+    version="1.0.9"
     provider-name="Imagenes">
 
     <requires>
@@ -22,7 +22,6 @@
             <icon>icon.png</icon>
         </assets>
     </extension>
-
 </addon>
 <addon id="plugin.program.repoinstaller"
     name="Instalar repositorios"
