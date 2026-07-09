@@ -1,36 +1,34 @@
 import os
-import sys
-import xbmc
+import shutil
 import xbmcgui
-import xbmcplugin
 
-handle = int(sys.argv[1])
+# Carpeta donde está el addon
+origen = os.path.dirname(os.path.abspath(__file__))
 
-ruta = os.path.dirname(os.path.abspath(__file__))
+# Abrir selector de carpeta
+dialog = xbmcgui.Dialog()
+destino = dialog.browseSingle(
+    type=0,
+    heading="Selecciona la carpeta donde copiar las imágenes",
+    shares="files"
+)
 
-xbmc.log("Ruta del addon: " + ruta, xbmc.LOGINFO)
+# Si el usuario cancela
+if not destino:
+    raise SystemExit
 
-xbmcplugin.setContent(handle, "images")
+# Copiar las imágenes
+copiadas = 0
 
-for archivo in sorted(os.listdir(ruta)):
+for archivo in os.listdir(origen):
     if archivo.lower().endswith((".jpg", ".jpeg", ".png", ".webp")):
-        imagen = os.path.join(ruta, archivo)
-
-        xbmc.log("Imagen encontrada: " + imagen, xbmc.LOGINFO)
-
-        item = xbmcgui.ListItem(label=archivo)
-        item.setArt({
-            "thumb": imagen,
-            "icon": imagen,
-            "fanart": imagen
-        })
-        item.setProperty("IsPlayable", "true")
-
-        xbmcplugin.addDirectoryItem(
-            handle=handle,
-            url=imagen,
-            listitem=item,
-            isFolder=False
+        shutil.copy2(
+            os.path.join(origen, archivo),
+            os.path.join(destino, archivo)
         )
+        copiadas += 1
 
-xbmcplugin.endOfDirectory(handle)
+dialog.ok(
+    "Fotos",
+    f"Se han copiado {copiadas} imágenes."
+)
