@@ -43,7 +43,7 @@
 </addon>
 <addon id="repository.demo"
     name="Guillem Repo"
-    version="1.0.7"
+    version="1.0.8"
     provider-name="Guillem">
 
     <requires>
@@ -52,9 +52,9 @@
 
     <extension point="xbmc.addon.repository">
         <dir>
-            <info compressed="false">https://guillemc97.github.io/Kodi/addons.xml</info>
-            <checksum>https://guillemc97.github.io/Kodi/addons.xml.md5</checksum>
-            <datadir zip="true">https://guillemc97.github.io/Kodi/</datadir>
+            <info compressed="false">https://raw.githubusercontent.com/guillemc97/Kodi/main/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/guillemc97/Kodi/main/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/guillemc97/Kodi/main/</datadir>
         </dir>
     </extension>
 
