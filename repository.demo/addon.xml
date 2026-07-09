@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="repository.demo"
     name="Repo"
-    version="1.0.4"
+    version="1.0.5"
     provider-name="Guillem">
-
-    <requires>
-        <import addon="xbmc.addon" version="20.0.0" />
-    </requires>
 
     <extension point="xbmc.addon.repository">
         <dir>
@@ -25,9 +21,8 @@
     </extension>
 
     <extension point="xbmc.addon.metadata">
-        <summary>Bugatsinho repository</summary>
-        <description>This repository contains Greek, Spanish and other addons!Read first each
-            addon's description!</description>
+        <summary>Guillem repositorio</summary>
+        <description>Este repositorio esta diseñado para envia y facilitar para repositores nuevos</description>
         <assets>
             <icon>icon.png</icon>
         </assets>
