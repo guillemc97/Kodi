@@ -4,6 +4,10 @@
     version="1.0.5"
     provider-name="Guillem">
 
+    <requires>
+        <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+
     <extension point="xbmc.addon.repository">
         <dir>
             <info compressed="false">
