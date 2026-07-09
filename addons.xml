@@ -47,7 +47,7 @@
 </addon>
 <addon id="repository.kodi"
     name="Guillem Repo"
-    version="1.0.9"
+    version="1.1.0"
     provider-name="Guillem">
 
     <requires>
