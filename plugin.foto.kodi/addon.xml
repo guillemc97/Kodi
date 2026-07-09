@@ -11,7 +11,6 @@
     <extension point="xbmc.python.script"
         library="addon.py">
         <provides>image</provides>
-        <provides>pictures</provides>
     </extension>
 
     <extension point="xbmc.addon.metadata">
