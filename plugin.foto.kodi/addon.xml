@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.foto.kodi"
     name="Fotos"
-    version="1.0.7"
+    version="1.0.8"
     provider-name="Imagenes">
 
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
     </requires>
 
-    <extension point="xbmc.python.script"
+    <extension point="xbmc.python.pluginsource"
         library="addon.py">
         <provides>image</provides>
     </extension>
