@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.foto.demo"
-       name="Fotos"
-       version="1.0.3"
-       provider-name="Imagenes">
+    name="Fotos"
+    version="1.0.3"
+    provider-name="Imagenes">
 
     <requires>
-        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="xbmc.python" version="3.0.0" />
     </requires>
 
     <extension point="xbmc.addon.metadata">
-        <summary lang="es_ES">Instalar repositorios 2</summary>
-        <description lang="es_ES">Descage los repos disponibles</description>
+        <summary lang="es_ES">Instalar Imagenes</summary>
+        <description lang="es_ES">Nuevas imagenes en el repo</description>
         <platform>all</platform>
         <assets>
             <icon>icon.png</icon>
