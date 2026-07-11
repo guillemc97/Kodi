@@ -6,5 +6,13 @@
     {
         "name": "Deportes en Directo (Magellan)",
         "repo": "https://tinyurl.com/magellanrepo/"
+    },
+    {
+        "name": "Peliculas (Palantir)",
+        "repo": "https://palantirsource.github.io/palantir/"
+    },
+    {
+        "name": "Peliculas (Alfa)",
+        "repo": "https://alfa-addon.com/alfa/"
     }
 ]
